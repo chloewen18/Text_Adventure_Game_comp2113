@@ -9,7 +9,7 @@ using namespace std;
 
 // Trigger a random event after each action
 void triggerRandomEvent(Player& p);
-
+void startNewDay(Player& p);
 // Handle one full day (5 action points)
 void processDay(Player& p);
 
