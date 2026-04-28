@@ -103,10 +103,6 @@ void clearCin() {
     cin.clear();
     cin.ignore(numeric_limits<streamsize>::max(), '\n');
 }
-
-// ------------------------------
-// 绝对安全 不会无限循环版本
-// ------------------------------
 void processDay(Player& p) {
     p.actionPoints = 5;
     cout << "\n==================== DAY " << p.currentDay << " ====================\n";
