@@ -2,12 +2,17 @@
 #include "player.h"
 #include "action.h"
 #include "file_system.h"
+#include <iostream>
+#include <cstdlib>
+#include <ctime>
+#include <algorithm>
+using namespace std;
 
-// Debt target you decided: 1000
+// Target debt to repay
 const int DEBT_TARGET = 1000;
 
+// Random event system (15% chance)
 void triggerRandomEvent(Player& p) {
-    // 15% chance to trigger an event
     int chance = rand() % 100;
     if (chance >= 15) return;
 
@@ -37,8 +42,7 @@ void triggerRandomEvent(Player& p) {
             break;
         case 5:
             cout << "Bad weather wasted your trip! Money -5" << endl;
-            if (p.money >= 5) p.money -= 5;
-            else p.money = 0;
+            p.money = max(0, p.money - 5);
             break;
         case 6:
             cout << "Lucky coin found! Next income doubled effect" << endl;
@@ -46,7 +50,6 @@ void triggerRandomEvent(Player& p) {
             break;
         case 7:
             cout << "You rested well! You feel energized." << endl;
-            // No stat change, just flavor
             break;
         case 8:
             cout << "Found an old backpack! Backpack +1 slot" << endl;
@@ -59,13 +62,21 @@ void triggerRandomEvent(Player& p) {
     }
 }
 
-void processDay(Player& p) {
-    p.actionPoints = 5;
+// Daily start: show summary + auto-save game
+void startNewDay(Player& p) {
+    showDayStartSummary(p);
+    autoSave(p);
     cout << "\n====================================" << endl;
     cout << "          DAY " << p.currentDay << " START" << endl;
     cout << "====================================" << endl;
+    cout << "Day " << p.currentDay << " has begun. Good luck, Mercenary!" << endl;
+}
 
-    while (p.actionPoints > 0) {
+// Daily action loop (5 action points per day)
+void processDay(Player& p) {
+    p.actionPoints = 5;
+
+    while (p.actionPoints > 0 && p.health > 0) {
         cout << "\nRemaining Action Points: " << p.actionPoints << endl;
         cout << "1. Hunt Monster" << endl;
         cout << "2. Help Villager" << endl;
@@ -90,7 +101,7 @@ void processDay(Player& p) {
                 break;
             case 3:
                 showBackpack(p);
-                continue; // does not cost AP
+                continue;
             default:
                 cout << "Invalid input. Try again." << endl;
                 continue;
@@ -103,58 +114,64 @@ void processDay(Player& p) {
     cout << "\n====================================" << endl;
     cout << "          DAY " << p.currentDay << " END" << endl;
     cout << "====================================" << endl;
-    p.currentDay++;
 }
 
+// Main game loop (14 days + save system)
 void startGame(Player& p) {
-    srand(time(0)); // init random
+    srand(time(0));
     initPlayer(p);
+    showMainMenu();
 
     cout << "\nYour debt: 1000 gold. You have 14 days to pay it back." << endl;
-    cout << "Press any key to start..." << endl;
+    cout << "Press Enter to start the contract..." << endl;
     cin.get();
     cin.get();
 
-    while (true) {
-        if (checkEndCondition(p)) {
-            break;
-        }
+    while (p.currentDay <= 14) {
+        // Auto-save at the beginning of each day
+        startNewDay(p);
+
+        // Run daily actions
         processDay(p);
+
+        // If player dies, reload morning save and replay the day
+        if (p.health <= 0) {
+            cout << "\nYou died during Day " << p.currentDay << "..." << endl;
+            cout << "Loading morning save... Restarting the day." << endl;
+            loadGame(p, "save.txt");
+            continue;
+        }
+
+        // Proceed to next day
+        p.currentDay++;
     }
+
+    // Show final ending after 14 days
+    checkEndCondition(p);
 }
 
+// Check game end conditions and show endings
 bool checkEndCondition(const Player& p) {
-    // End condition 1: Day > 14
-    if (p.currentDay > 14) {
-        cout << "\n====================================" << endl;
-        cout << "          14 DAYS PASSED" << endl;
-        cout << "====================================" << endl;
-        cout << "Your total money: " << p.money << endl;
-        cout << "Debt to repay:    " << DEBT_TARGET << endl;
+    cout << "\n====================================" << endl;
+    cout << "          14 DAYS PASSED" << endl;
+    cout << "====================================" << endl;
+    cout << "Your total money: " << p.money << endl;
+    cout << "Debt to repay:    " << DEBT_TARGET << endl;
 
-        if (p.money >= DEBT_TARGET) {
-            cout << "\n[ PERFECT ENDING ]" << endl;
-            cout << "You paid off all debt and have savings!" << endl;
-            cout << "You can start a new life in the town." << endl;
-        } 
-        else if (p.money >= DEBT_TARGET * 0.7) {
-            cout << "\n[ NORMAL ENDING ]" << endl;
-            cout << "You barely paid the debt." << endl;
-            cout << "You stay in town and live an ordinary life." << endl;
-        } 
-        else {
-            cout << "\n[ BAD ENDING ]" << endl;
-            cout << "You cannot pay the debt." << endl;
-            cout << "You are exiled from the town..." << endl;
-        }
-        return true;
+    if (p.money >= DEBT_TARGET) {
+        cout << "\n[ PERFECT ENDING ]" << endl;
+        cout << "You paid off all debt and have savings!" << endl;
+        cout << "You can start a new life in the town." << endl;
+    } 
+    else if (p.money >= DEBT_TARGET * 0.7) {
+        cout << "\n[ NORMAL ENDING ]" << endl;
+        cout << "You barely paid the debt." << endl;
+        cout << "You stay in town and live an ordinary life." << endl;
+    } 
+    else {
+        cout << "\n[ BAD ENDING ]" << endl;
+        cout << "You cannot pay the debt." << endl;
+        cout << "You are exiled from the town..." << endl;
     }
-
-    // End condition 2: health <= 0
-    if (p.health <= 0) {
-        cout << "\nYou collapsed... Game Over." << endl;
-        return true;
-    }
-
-    return false;
+    return true;
 }
