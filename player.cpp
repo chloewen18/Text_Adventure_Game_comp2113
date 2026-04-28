@@ -4,6 +4,7 @@ using namespace std;
 
 // 初始化玩家
 void initPlayer(Player& p) {
+    p.countA = 0;
     p.health = 10;
     p.strength = 3;
     p.intelligence = 3;
