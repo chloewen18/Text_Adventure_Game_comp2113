@@ -3,6 +3,7 @@
 
 // 玩家结构体
 struct Player {
+    int countA;
     int health;          // 生命值 0-10
     int strength;        // 武力值
     int intelligence;    // 智力值
