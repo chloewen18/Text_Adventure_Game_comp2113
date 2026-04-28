@@ -109,7 +109,6 @@ void processDay(Player& p) {
 void startGame(Player& p) {
     srand(time(0)); // init random
     initPlayer(p);
-    showMainMenu();
 
     cout << "\nYour debt: 1000 gold. You have 14 days to pay it back." << endl;
     cout << "Press any key to start..." << endl;
