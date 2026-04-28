@@ -14,7 +14,7 @@ void saveGame(const Player& p, std::string filename) {
     fout << p.health << endl;
     fout << p.strength << endl;
     fout << p.intelligence << endl;
-    fout << p.money << endl;           // 怪物血液
+    fout << p.money << endl;
     fout << p.currentDay << endl;
     fout << p.actionPoints << endl;
     fout << p.backpackSize << endl;
@@ -36,7 +36,6 @@ bool loadGame(Player& p, std::string filename) {
         return false;
     }
 
-    // 释放旧背包内存
     if (p.backpack != nullptr) {
         delete[] p.backpack;
         p.backpack = nullptr;
@@ -63,4 +62,21 @@ bool loadGame(Player& p, std::string filename) {
          << " | Blood Units:" << p.money 
          << " | Backpack: " << p.itemCount << "/" << p.backpackSize << endl;
     return true;
+}
+
+void autoSave(const Player& p) {
+    saveGame(p, "save.txt");
+}
+
+void showDayStartSummary(const Player& p) {
+    cout << "\n========================================" << endl;
+    cout << "          DAY " << p.currentDay << " - MISSION START         " << endl;
+    cout << "========================================" << endl;
+    cout << "Health      : " << p.health << endl;
+    cout << "Strength    : " << p.strength << endl;
+    cout << "Intelligence: " << p.intelligence << endl;
+    cout << "Blood Units : " << p.money << endl;
+    cout << "Action Points : " << p.actionPoints << endl;
+    cout << "Backpack    : " << p.itemCount << "/" << p.backpackSize << endl;
+    cout << "----------------------------------------" << endl;
 }
