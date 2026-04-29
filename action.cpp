@@ -280,7 +280,6 @@ void helpVillager(Player& p) {
         }
 
         if (correct) {
-            // 修改：50,000 Money / 15 Intelligence
             cout << ">> Wise! +50,000 Money and +15 Intelligence." << endl;
             p.money += 50000; p.intelligence += 15;
             if (rand() % 10 < 3) {
