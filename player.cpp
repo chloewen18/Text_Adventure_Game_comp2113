@@ -5,9 +5,9 @@ using namespace std;
 // 初始化玩家
 void initPlayer(Player& p) {
     p.countA = 0;
-    p.health = 10;
-    p.strength = 3;
-    p.intelligence = 3;
+    p.health = 100;
+    p.strength = 40;
+    p.intelligence = 30;
     p.money = 0;
     p.currentDay = 1;
     p.actionPoints = 5;
