@@ -23,28 +23,28 @@ void triggerRandomEvent(Player& p) {
 
     switch (eventId) {
         case 0:
-            cout << "You found a lost money bag! +30 money" << endl;
-            p.money += 30;
+            cout << "You found a lost money bag! +300 money" << endl;
+            p.money += 300;
             break;
         case 1:
             cout << "A villager gave you herbs! Obtained item" << endl;
             addItem(p, 1);
             break;
         case 2:
-            cout << "You fought off a wild beast! Strength +1" << endl;
-            p.strength += 1;
+            cout << "You fought off a wild beast! Strength +3" << endl;
+            p.strength += 3;
             break;
         case 3:
-            cout << "You helped an old traveler! Intelligence +1" << endl;
-            p.intelligence += 1;
+            cout << "You helped an old traveler! Intelligence +3" << endl;
+            p.intelligence += 3;
             break;
         case 4:
             cout << "You found extra supplies! +1 Action Point" << endl;
             p.actionPoints += 1;
             break;
         case 5:
-            cout << "Bad weather wasted your trip! Money -5" << endl;
-            p.money = max(0, p.money - 5);
+            cout << "Bad weather wasted your trip! Money -100" << endl;
+            p.money = max(0, p.money - 100);
             break;
         case 6:
             cout << "Lucky coin found! Next income doubled effect" << endl;
@@ -58,8 +58,8 @@ void triggerRandomEvent(Player& p) {
             p.backpackSize = min(10, p.backpackSize + 1);
             break;
         case 9:
-            cout << "A stranger gave you charity! +15 money" << endl;
-            p.money += 15;
+            cout << "A stranger gave you charity! +150 money" << endl;
+            p.money += 150;
             break;
     }
 }
