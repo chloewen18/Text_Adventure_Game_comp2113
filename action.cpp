@@ -8,18 +8,18 @@ using namespace std;
 void setDifficulty(Player& p, int diffLevel) {
 
     switch(diffLevel) {
-        case 1: // Easy Mode (适合快速展示所有剧情)
-            p.strength = 40;     // 初始战斗力更强
-            p.intelligence = 40; // 直接达到[祭坛]解锁门槛
-            p.health = 120;      // 满血开局
+        case 1: 
+            p.strength = 40;   
+            p.intelligence = 40; 
+            p.health = 120;     
             cout << "\n[SYSTEM] Difficulty: EASY." << endl;
             cout << ">> 'Enjoy your vacation, Survivor. The island seems friendly today!'" << endl;
             break;
 
-        case 2: // Normal Mode (标准的极速版节奏)
-            p.strength = 30;     // 我们刚才讨论的平衡数值
-            p.intelligence = 30; // 离解锁祭坛还差 10 点，第一天刚好能通过海滩补齐
-            p.health = 100;      // 稍微有一点点生存压力
+        case 2: 
+            p.strength = 30;    
+            p.intelligence = 30; 
+            p.health = 100;      
             cout << "\n[SYSTEM] Difficulty: NORMAL." << endl;
             cout << ">> 'Survival is a gift. Pay your debt, or stay here forever!'" << endl;
             break;
@@ -33,9 +33,8 @@ void setDifficulty(Player& p, int diffLevel) {
 }
 
 void hunt(Player& p) {
-    // --- 1. 初始化怪物数据 (已修改为演示版公式) ---
-    int monsterStr = 20 + (p.currentDay * 5); // 修改：初始20，每天+5
-    int monsterHP = 60 + (p.currentDay * 15); // 修改：初始60，每天+15
+    int monsterStr = 20 + (p.currentDay * 5); 
+    int monsterHP = 60 + (p.currentDay * 15); 
     bool isWeakened = false; 
     
     cout << "\n======== ⚔️ ENTER COMBAT ZONE ========" << endl;
@@ -76,7 +75,7 @@ void hunt(Player& p) {
         int action; cin >> action;
 
         if (action == 1) { 
-            int damage = (p.strength * 0.7) + (rand() % 10); // 修改：伤害系数 0.7，随机波动 0-9
+            int damage = (p.strength * 0.7) + (rand() % 10); 
             if (isWeakened) {
                 damage *= 2; 
                 isWeakened = false;
@@ -110,7 +109,7 @@ void hunt(Player& p) {
         }
 
         if (monsterHP > 0) {
-            int m_damage = (monsterStr * 0.3) + (rand() % 3); // 修改：基础伤害系数 0.3
+            int m_damage = (monsterStr * 0.3) + (rand() % 3);
             
             if (isTrap && action == 1) {
                 m_damage *= 2.5; 
@@ -140,20 +139,16 @@ void hunt(Player& p) {
     if (p.health <= 0) {
         cout << "\n💀 WASTED... The island has claimed another soul." << endl;
     } else {
-        // 修改奖励：改为基于强度的倍率
         int gain = (monsterStr * 8) + (rand() % 51 + 50); 
         p.money += gain;
         
-        // 修改回血：Int / 5
         int recovery = (p.intelligence / 5); 
-        // 注意：这里的 120 建议改为变量 p.maxHealth，我先按普通难度上限填
         p.health = (p.health + recovery > 120) ? 120 : (p.health + recovery);
         
         cout << "\n✌️ VICTORY!" << endl;
         cout << "Gained Blood(Money): " << gain << endl;
         if (recovery > 0) cout << "You treated your wounds with wisdom, recovering " << recovery << " HP." << endl;
         
-        // 修改：30% 掉落绷带 (itemID 0)
         if (rand() % 10 < 3) {
             addItem(p, 0);
             cout << "[DROP] The predator dropped a Bandage!" << endl;
@@ -192,7 +187,6 @@ void helpVillager(Player& p) {
         return;
     }
 
-    // --- 运气事件逻辑 (仅更新了回血上限数值) ---
     if (rand() % 100 < 20) {
         int eventType = rand() % 3;
         if (eventType == 0) {
@@ -210,7 +204,7 @@ void helpVillager(Player& p) {
                         p.strength += 10;
                         cout << ">> Success! Your muscles feel like iron." << endl;
                     } else {
-                        p.health -= 5; // 修改：吃错药扣5点更合理
+                        p.health -= 5; 
                         cout << ">> It was expired! You feel sick. (Health -5)" << endl;
                     }
                 } else {
@@ -220,7 +214,6 @@ void helpVillager(Player& p) {
         } else {
             cout << "\n[EVENT] You found a peaceful spot and took a long nap." << endl;
             cout << "Result: Health restored by 15, and you found an old bandage (Item+)." << endl;
-            // 修改：回血15，上限120
             p.health = (p.health + 15 > 120) ? 120 : p.health + 15;
             addItem(p, 0); 
         }
@@ -233,7 +226,6 @@ void helpVillager(Player& p) {
         int userAnswer;
         bool correct = false;
 
-        // --- 场景 A 修改：奖励统一提升为 20,000 Money / 10 Intelligence ---
         if (p.countA <= 5) {
             cout << "\n[TRAINING - LV 1] Quick Math: " << n1 << " + " << n2 << " = ?" << endl;
             cin >> userAnswer;
@@ -330,15 +322,15 @@ void helpVillager(Player& p) {
             
             int labAction; cin >> labAction;
             switch (labAction) {
-                case 1: // 修改：+30 Strength
+                case 1: 
                     if (p.money >= 1500) { p.money -= 1500; p.strength += 30; cout << "Upgrade Complete." << endl; }
                     else cout << "Insufficient funds!" << endl;
                     break;
-                case 2: // 修改：+30 Intelligence
+                case 2: 
                     if (p.money >= 1500) { p.money -= 1500; p.intelligence += 30; cout << "Upgrade Complete." << endl; }
                     else cout << "Insufficient funds!" << endl;
                     break;
-                case 3: // 修改：-20 Int -> +30 Str
+                case 3: 
                     if (p.intelligence >= 20) { p.intelligence -= 20; p.strength += 30; cout << "Swap Complete." << endl; }
                     else cout << "Intelligence too low!" << endl;
                     break;
@@ -346,7 +338,7 @@ void helpVillager(Player& p) {
             }
         } else {
             cout << "\n[ERROR] Access Denied. Electrical shock!" << endl;
-            p.health -= 15; // 修改：实验室电击扣15点
+            p.health -= 15;
         }
     }
     cout << "==========================================\n" << endl;
