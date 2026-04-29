@@ -31,7 +31,7 @@ int main() {
         if (choice == 1) {
             cout << "\nContract Accepted. Deploying to the island...\n" << endl;
 
-            setDifficultyMenu();
+            setDifficulty();
             int diff;
             cin >> diff;
 
