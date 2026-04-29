@@ -41,9 +41,9 @@ void addItem(Player& p, int itemId) {
         p.backpack[p.itemCount] = itemId;
         p.itemCount++;
         cout << "Item Gained!";
-        if (itemId == 1) cout << "1.Bandage (Health+1)";
-        if (itemId == 2) cout << "2.Food (Strength+1)";
-        if (itemId == 3) cout << "3.Book (Intelligence+1)";
+        if (itemId == 1) cout << "1.Bandage (Health+30)";
+        if (itemId == 2) cout << "2.Food (Strength+5)";
+        if (itemId == 3) cout << "3.Book (Intelligence+5)";
         cout << endl;
     } else {
         cout << "Backpack Is Full!" << endl;
@@ -60,17 +60,17 @@ void useItem(Player& p, int itemIndex) {
     int id = p.backpack[itemIndex];
 
     if (id == 1) {
-        cout << "Bandage Used: Health+1" << endl;
-        p.health += 2;
+        cout << "Bandage Used: Health+30" << endl;
+        p.health += 30;
         if (p.health > 10) p.health = 10;
     }
     else if (id == 2) {
-        cout << "Food Used: Strength+1" << endl;
-        p.strength += 1;
+        cout << "Food Used: Strength+5" << endl;
+        p.strength += 5;
     }
     else if (id == 3) {
-        cout << "Bood Used: Intelligence+1" << endl;
-        p.intelligence += 1;
+        cout << "Bood Used: Intelligence+5" << endl;
+        p.intelligence += 5;
     }
     else {
         cout << "Unknown Item!" << endl;
@@ -94,9 +94,9 @@ void showBackpack(Player& p) {
     for (int i = 0; i < p.itemCount; i++) {
         cout << i << ": ";
         int id = p.backpack[i];
-        if (id == 1) cout << "1.Bandage (Health+1)";
-        if (id == 2) cout << "2.Food (Strength+1)";
-        if (id == 3) cout << "3.Book (Intelligence+1)";
+        if (id == 1) cout << "1.Bandage (Health+30)";
+        if (id == 2) cout << "2.Food (Strength+5)";
+        if (id == 3) cout << "3.Book (Intelligence+5)";
         cout << endl;
     }
 
