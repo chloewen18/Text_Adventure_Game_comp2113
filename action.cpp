@@ -12,8 +12,9 @@ void setDifficulty(Player& p, int diffLevel) {
             p.strength = 40;   
             p.intelligence = 40; 
             p.health = 120;     
-            cout << "\n[SYSTEM] Difficulty: EASY." << endl;
-            cout << ">> 'Enjoy your vacation, Survivor. The island seems friendly today!'" << endl;
+            cout << "\n[SYSTEM] Difficulty: EASY" << endl;
+            cout << ">> 'The lender is distracted, but 3000 gold is still a mountain.'" << endl;
+            cout << ">> 'You have 5 DAYS. Make every strike count, traveler!'" << endl;
             break;
 
         case 2: 
