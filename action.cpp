@@ -21,8 +21,9 @@ void setDifficulty(Player& p, int diffLevel) {
             p.strength = 30;    
             p.intelligence = 30; 
             p.health = 100;      
-            cout << "\n[SYSTEM] Difficulty: NORMAL." << endl;
-            cout << ">> 'Survival is a gift. Pay your debt, or stay here forever!'" << endl;
+            cout << "\n[SYSTEM] Difficulty: NORMAL" << endl;
+            cout << ">> 'The town lender is watching your every move...'" << endl;
+            cout << ">> '3000 gold in 5 DAYS? Repay it, or face ETERNAL EXILE!'" << endl;
             break;
 
         default:
