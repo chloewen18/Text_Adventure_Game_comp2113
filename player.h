@@ -19,6 +19,6 @@ void addItem(Player& p, int itemId);
 void useItem(Player& p, int itemIndex);
 
 // 显示背包
-void showBackpack(const Player& p);
+void showBackpack(Player& p);
 
 #endif
