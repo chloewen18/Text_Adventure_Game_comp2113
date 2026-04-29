@@ -2,7 +2,7 @@
 #include <cstdlib>
 #include <ctime>
 #include "game_shared.h"
-#include "player.h" // 假设里面有 updateAttributes 或类似修改属性的函数
+#include "player.h" 
 using namespace std;
 
 void setDifficulty(Player& p, int diffLevel) {
