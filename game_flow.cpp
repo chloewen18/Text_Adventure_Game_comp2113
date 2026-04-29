@@ -198,12 +198,12 @@ bool checkEndCondition(const Player& p) {
     cout << "Final Money: " << p.money << " | Required Debt: " << DEBT_TARGET << endl;
     cout << "------------------------------------" << endl;
 
-    if (p.money >= DEBT_TARGET) {
+    if (p.money >= 3000) {
         cout << "[✨ PERFECT ENDING ]" << endl;
         cout << "You paid off all debt and have extra savings!" << endl;
         cout << "The town welcomes you, and you start a new, stable life." << endl;
     } 
-    else if (p.money >= DEBT_TARGET * 0.7) {
+    else if (p.money >= 1500 ) {
         cout << "[🟡 NORMAL ENDING ]" << endl;
         cout << "You barely repaid the debt (70%+ of the total)." << endl;
         cout << "You stay in the town but live a simple, ordinary life." << endl;
