@@ -29,27 +29,27 @@ int main() {
         cin >> choice;
 
         if (choice == 1) {
-            cout << "\nContract Accepted. Deploying to the island...\n" << endl;
-
-            setDifficulty();
+            cout << "\n[SYSTEM] Contract Accepted. Deploying to the island..." << endl;
+            
+            cout << "Select Difficulty: 1. EASY  2. NORMAL" << endl;
+            cout << "Choice >> ";
             int diff;
             cin >> diff;
+            
+            initPlayer(p);
 
             if (diff != 1 && diff != 2) {
-                cout << "Invalid input. Defaulting to Standard difficulty.\n" << endl;
-                diff = 1;
+                cout << "[!] Invalid input. Defaulting to NORMAL difficulty." << endl;
+                diff = 2;
             }
-
-            initPlayer(p);
+            
             setDifficulty(p, diff);
 
-            cout << "Mission started on " 
-                 << (diff == 1 ? "Standard" : "Hard") 
-                 << " difficulty.\n" << endl;
+            cout << "\n[MISSION START] Mode: " 
+                 << (diff == 1 ? "EASY" : "NORMAL") << endl;
 
             startGame(p);
             break;
-
         }
         else if (choice == 2) {
             if (loadGame(p, "save.txt")) {
