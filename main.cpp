@@ -19,16 +19,6 @@ void showMainMenu() {
     cout << "Enter Command: ";
 }
 
-void showDifficultyMenu() {
-    cout << "\n========================================" << endl;
-    cout << "         SELECT DIFFICULTY             " << endl;
-    cout << "========================================" << endl;
-    cout << "1. Standard Difficulty" << endl;
-    cout << "2. Hard Difficulty" << endl;
-    cout << "----------------------------------------" << endl;
-    cout << "Choose difficulty: ";
-}
-
 int main() {
     srand(time(NULL));
     Player p = {};
