@@ -91,35 +91,6 @@ void saveGameData(Player& p) {
     cout << "\n✅ Game saved to " << SAVE_FILE << endl;
 }
 
-// Manual load function
-void loadGameData(Player& p) {
-    ifstream loadFile(SAVE_FILE);
-    if (!loadFile) {
-        cout << "No save file found" << endl;
-        return;
-    }
-
-    // Load core stats
-    loadFile >> p.health;
-    loadFile >> p.strength;
-    loadFile >> p.intelligence;
-    loadFile >> p.money;
-    loadFile >> p.currentDay;
-    loadFile >> p.actionPoints;
-    loadFile >> p.backpackSize;
-    loadFile >> p.itemCount;
-
-    // Load backpack items
-    delete[] p.backpack; // Clear old backpack
-    p.backpack = new int[p.backpackSize];
-    for (int i = 0; i < p.itemCount; i++) {
-        loadFile >> p.backpack[i];
-    }
-
-    loadFile.close();
-    cout << "Game loaded from " << SAVE_FILE << endl;
-}
-
 // Daily start (replaced showDayStartSummary with simple status)
 void startNewDay(Player& p) {
     // Show day start status (instead of unimplemented showDayStartSummary)
@@ -145,14 +116,13 @@ void processDay(Player& p) {
         cout << "1. Hunt Monster (Earn money + Strength)" << endl;
         cout << "2. Help Villager (Earn money + Intelligence)" << endl;
         cout << "3. Show Backpack (No AP cost)" << endl;
-        cout << "4. Save Game (No AP cost)" << endl; // Add manual save option
-        cout << "5. End Today" << endl;
+        cout << "4. End Today" << endl;
         cout << "Your choice: ";
 
         int choice;
         cin >> choice;
 
-        if (choice == 5) {
+        if (choice == 4) {
             cout << "\nYou decide to rest early. Ending Day " << p.currentDay << "." << endl;
             break;
         }
@@ -166,9 +136,6 @@ void processDay(Player& p) {
                 break;
             case 3:
                 showBackpack(p);
-                continue; // No AP cost
-            case 4:
-                saveGameData(p); // Manual save
                 continue; // No AP cost
             default:
                 cout << "Invalid input! Please enter 1-5." << endl;
@@ -192,7 +159,7 @@ void startGame(Player& p) {
     showMainMenu(); // Show game main menu
 
     // Game intro (English only)
-    cout << "\n📜 GAME INTRO" << endl;
+    cout << "\n GAME INTRO" << endl;
     cout << "You owe 1000 gold to the town lender. You have 5 DAYS to repay it." << endl;
     cout << "Fail, and you will be exiled from the town forever." << endl;
     cout << "Press Enter to start your journey..." << endl;
