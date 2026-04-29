@@ -3,7 +3,7 @@
 #include "action.h"
 #include "file_system.h"
 #include <iostream>
-#include <fstream> // For save/load file operations
+#include <fstream>
 #include <cstdlib>
 #include <ctime>
 #include <algorithm>
@@ -64,7 +64,7 @@ void triggerRandomEvent(Player& p) {
     }
 }
 
-// Manual save function (replaces unimplemented autoSave)
+// Manual save function
 void saveGameData(Player& p) {
     ofstream saveFile(SAVE_FILE);
     if (!saveFile) {
@@ -72,7 +72,7 @@ void saveGameData(Player& p) {
         return;
     }
 
-    // Save all player stats (matches load logic)
+    // Save all player stats
     saveFile << p.health << endl;
     saveFile << p.strength << endl;
     saveFile << p.intelligence << endl;
@@ -91,11 +91,11 @@ void saveGameData(Player& p) {
     cout << "\n✅ Game saved to " << SAVE_FILE << endl;
 }
 
-// Manual load function (replaces unimplemented loadGame)
+// Manual load function
 void loadGameData(Player& p) {
     ifstream loadFile(SAVE_FILE);
     if (!loadFile) {
-        cout << "❌ No save file found! Starting fresh." << endl;
+        cout << "No save file found" << endl;
         return;
     }
 
@@ -117,7 +117,7 @@ void loadGameData(Player& p) {
     }
 
     loadFile.close();
-    cout << "\n✅ Game loaded from " << SAVE_FILE << endl;
+    cout << "Game loaded from " << SAVE_FILE << endl;
 }
 
 // Daily start (replaced showDayStartSummary with simple status)
@@ -126,12 +126,12 @@ void startNewDay(Player& p) {
     cout << "\n====================================" << endl;
     cout << "          DAY " << p.currentDay << " START" << endl;
     cout << "====================================" << endl;
-    cout << "📊 Current Status:" << endl;
+    cout << "Current Status:" << endl;
     cout << "Health: " << p.health << " | Strength: " << p.strength << " | Intelligence: " << p.intelligence << endl;
     cout << "Money: " << p.money << " | Action Points: 5 (reset)" << endl;
     cout << "------------------------------------" << endl;
     
-    // Auto-save at day start (using our custom save function)
+    // Auto-save at day start
     saveGameData(p);
     cout << "Day " << p.currentDay << " has begun. Good luck, Mercenary!" << endl;
 }
@@ -141,7 +141,7 @@ void processDay(Player& p) {
     p.actionPoints = 5; // Reset action points daily
 
     while (p.actionPoints > 0 && p.health > 0) {
-        cout << "\n🔧 Remaining Action Points: " << p.actionPoints << endl;
+        cout << "\nRemaining Action Points: " << p.actionPoints << endl;
         cout << "1. Hunt Monster (Earn money + Strength)" << endl;
         cout << "2. Help Villager (Earn money + Intelligence)" << endl;
         cout << "3. Show Backpack (No AP cost)" << endl;
@@ -171,7 +171,7 @@ void processDay(Player& p) {
                 saveGameData(p); // Manual save
                 continue; // No AP cost
             default:
-                cout << "❌ Invalid input! Please enter 1-5." << endl;
+                cout << "Invalid input! Please enter 1-5." << endl;
                 continue;
         }
 
@@ -185,7 +185,7 @@ void processDay(Player& p) {
     cout << "====================================" << endl;
 }
 
-// Main game loop (14 days + working save/load)
+// Main game loop (5 days + working save/load)
 void startGame(Player& p) {
     srand(time(0)); // Initialize random seed
     initPlayer(p);  // Initialize player stats
@@ -193,14 +193,14 @@ void startGame(Player& p) {
 
     // Game intro (English only)
     cout << "\n📜 GAME INTRO" << endl;
-    cout << "You owe 1000 gold to the town lender. You have 14 DAYS to repay it." << endl;
+    cout << "You owe 1000 gold to the town lender. You have 5 DAYS to repay it." << endl;
     cout << "Fail, and you will be exiled from the town forever." << endl;
     cout << "Press Enter to start your journey..." << endl;
     cin.get();
     cin.get();
 
-    // 14-day core loop
-    while (p.currentDay <= 14) {
+    // 5-day core loop
+    while (p.currentDay <= 5) {
         // Start day: show status + auto-save
         startNewDay(p);
 
@@ -219,14 +219,14 @@ void startGame(Player& p) {
         p.currentDay++;
     }
 
-    // Show final ending after 14 days
+    // Show final ending after 5 days
     checkEndCondition(p);
 }
 
 // Check end conditions and show endings (100% English)
 bool checkEndCondition(const Player& p) {
     cout << "\n====================================" << endl;
-    cout << "          14 DAYS COMPLETED" << endl;
+    cout << "          5 DAYS COMPLETED" << endl;
     cout << "====================================" << endl;
     cout << "Final Money: " << p.money << " | Required Debt: " << DEBT_TARGET << endl;
     cout << "------------------------------------" << endl;
