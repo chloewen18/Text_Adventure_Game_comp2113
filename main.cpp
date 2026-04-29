@@ -10,7 +10,7 @@ using namespace std;
 
 void showMainMenu() {
     cout << "\n========================================" << endl;
-    cout << "     ISLAND MERC: 14 DAYS OF BLOOD     " << endl;
+    cout << "     ISLAND MERC: 5 DAYS OF BLOOD     " << endl;
     cout << "========================================" << endl;
     cout << "1. Start New Contract" << endl;
     cout << "2. Resume Previous Operation (Load Save)" << endl;
