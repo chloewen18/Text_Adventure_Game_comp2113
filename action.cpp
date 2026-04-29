@@ -232,24 +232,24 @@ void helpVillager(Player& p) {
             cout << "\n[TRAINING - LV 1] Quick Math: " << n1 << " + " << n2 << " = ?" << endl;
             cin >> userAnswer;
             if (userAnswer == (n1 + n2)) {
-                cout << ">> Correct! Intelligence +10, Money +200." << endl;
-                p.intelligence += 10; p.money += 200; correct = true;
+                cout << ">> Correct! Intelligence +5, Money +200." << endl;
+                p.intelligence += 5; p.money += 200; correct = true;
             } else { cout << ">> Wrong answer! No gains this time." << endl; }
         } 
         else if (p.countA <= 12) {
             cout << "\n[TRAINING - LV 2] Solve: " << n1 << " + " << n2 << " * " << n3 << " = ?" << endl;
             cin >> userAnswer;
             if (userAnswer == (n1 + n2 * n3)) {
-                cout << ">> Well done! Intelligence +10, Money +200." << endl;
-                p.intelligence += 10; p.money += 200; correct = true;
+                cout << ">> Well done! Intelligence +5, Money +200." << endl;
+                p.intelligence += 5; p.money += 200; correct = true;
             } else { cout << ">> Wrong answer! No gains this time." << endl; }
         } 
         else {
             cout << "\n[TRAINING - LV 3] Mastermind: (" << n1 << " + " << n2 << ") * " << n3 << " = ?" << endl;
             cin >> userAnswer;
             if (userAnswer == ((n1 + n2) * n3)) {
-                cout << ">> Perfect! Intelligence +10, Money +200." << endl;
-                p.intelligence += 10; p.money += 200; correct = true;
+                cout << ">> Perfect! Intelligence +5, Money +200." << endl;
+                p.intelligence += 5; p.money += 200; correct = true;
             } else { cout << ">> Wrong answer! No gains this time." << endl; }
         }
         if (correct && (rand() % 10 == 0)) {
