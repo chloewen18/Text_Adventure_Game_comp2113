@@ -10,7 +10,7 @@
 using namespace std;
 
 // Target debt to repay (core game rule)
-const int DEBT_TARGET = 1000;
+const int DEBT_TARGET = 3000;
 const string SAVE_FILE = "save.txt"; // Save file path
 
 // Random event system (15% trigger chance)
@@ -67,7 +67,7 @@ void triggerRandomEvent(Player& p) {
 void loadGameData(Player& p) {
     ifstream loadFile(SAVE_FILE);
     if (!loadFile) {
-        cout << "❌ No save file found! Starting fresh." << endl;
+        cout << "No save file found! Starting fresh." << endl;
         return;
     }
 
@@ -89,7 +89,7 @@ void loadGameData(Player& p) {
     }
 
     loadFile.close();
-    cout << "\n✅ Game loaded from " << SAVE_FILE << endl;
+    cout << "\n Game loaded from " << SAVE_FILE << endl;
 }
 // Manual save function
 void saveGameData(Player& p) {
@@ -115,7 +115,7 @@ void saveGameData(Player& p) {
     }
 
     saveFile.close();
-    cout << "\n✅ Game saved to " << SAVE_FILE << endl;
+    cout << "\n Game saved to " << SAVE_FILE << endl;
 }
 
 // Daily start (replaced showDayStartSummary with simple status)
@@ -140,8 +140,8 @@ void processDay(Player& p) {
 
     while (p.actionPoints > 0 && p.health > 0) {
         cout << "\nRemaining Action Points: " << p.actionPoints << endl;
-        cout << "1. Hunt Monster (Earn money + Strength)" << endl;
-        cout << "2. Help Villager (Earn money + Intelligence)" << endl;
+        cout << "1. Hunt Monster (Earn money + Item)" << endl;
+        cout << "2. Explore (Earn money + Intelligence + Strength +Item)" << endl;
         cout << "3. Show Backpack (No AP cost)" << endl;
         cout << "4. End Today" << endl;
         cout << "Your choice: ";
@@ -165,7 +165,7 @@ void processDay(Player& p) {
                 showBackpack(p);
                 continue; // No AP cost
             default:
-                cout << "Invalid input! Please enter 1-5." << endl;
+                cout << "Invalid input! Please enter 1-4." << endl;
                 continue;
         }
 
@@ -186,7 +186,7 @@ void startGame(Player& p) {
 
     // Game intro (English only)
     cout << "\n GAME INTRO" << endl;
-    cout << "You owe 1000 gold to the town lender. You have 5 DAYS to repay it." << endl;
+    cout << "You owe 3000 gold to the town lender. You have 5 DAYS to repay it." << endl;
     cout << "Fail, and you will be exiled from the town forever." << endl;
     cout << "Press Enter to start your journey..." << endl;
     cin.get();
@@ -231,12 +231,11 @@ bool checkEndCondition(const Player& p) {
     } 
     else if (p.money >= 1500 ) {
         cout << "[🟡 NORMAL ENDING ]" << endl;
-        cout << "You barely repaid the debt (70%+ of the total)." << endl;
-        cout << "You stay in the town but live a simple, ordinary life." << endl;
+        cout << "You paid off all debt and have 1500 extra savings!" << endl;
     } 
     else {
         cout << "[🔴 BAD ENDING ]" << endl;
-        cout << "You failed to repay enough debt (less than 70%)." << endl;
+        cout << "You failed to repay enough debt." << endl;
         cout << "You are exiled from the town—your fate is unknown." << endl;
     }
     return true;
