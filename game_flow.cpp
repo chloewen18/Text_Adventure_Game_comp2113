@@ -64,6 +64,33 @@ void triggerRandomEvent(Player& p) {
     }
 }
 
+void loadGameData(Player& p) {
+    ifstream loadFile(SAVE_FILE);
+    if (!loadFile) {
+        cout << "❌ No save file found! Starting fresh." << endl;
+        return;
+    }
+
+    // Load core stats
+    loadFile >> p.health;
+    loadFile >> p.strength;
+    loadFile >> p.intelligence;
+    loadFile >> p.money;
+    loadFile >> p.currentDay;
+    loadFile >> p.actionPoints;
+    loadFile >> p.backpackSize;
+    loadFile >> p.itemCount;
+
+    // Load backpack items
+    delete[] p.backpack; // Clear old backpack
+    p.backpack = new int[p.backpackSize];
+    for (int i = 0; i < p.itemCount; i++) {
+        loadFile >> p.backpack[i];
+    }
+
+    loadFile.close();
+    cout << "\n✅ Game loaded from " << SAVE_FILE << endl;
+}
 // Manual save function
 void saveGameData(Player& p) {
     ofstream saveFile(SAVE_FILE);
@@ -156,7 +183,6 @@ void processDay(Player& p) {
 void startGame(Player& p) {
     srand(time(0)); // Initialize random seed
     initPlayer(p);  // Initialize player stats
-    showMainMenu(); // Show game main menu
 
     // Game intro (English only)
     cout << "\n GAME INTRO" << endl;
